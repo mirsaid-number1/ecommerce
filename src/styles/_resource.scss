@@ -1,0 +1,13 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
+
+$font-stack: "Poppins", sans-serif;
+$blue-color: #40bfff;
+$red-color: #ff4858;
+$white-color: #bcddfe;
+$black-color: #373737;
+$dark_blue-color: #223263;
+
+body {
+  font-family: $font-stack;
+  overflow-x: hidden;
+}

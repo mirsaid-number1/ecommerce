@@ -1,0 +1,85 @@
+@use "resource";
+
+:root{
+  --up_nav:85%;
+  --nav: 85%;
+}
+
+@media  (max-width:950px) {
+  :root{
+    --up_nav:100%;
+    --nav:100%;
+  }
+}
+
+
+.up_nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0 10px 0 10px;
+  width: var(--up_nav,90%);
+  margin: auto;
+
+  .selectors {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    width: 125px;
+  }
+
+  select {
+    border: none;
+  }
+
+  .other_items {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 40%;
+
+    span {
+      display: flex;
+      align-items: center;
+    }
+  }
+} // up-nav
+
+.navbar {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  width: 100%;
+  background-color: white;
+  z-index: 10;
+
+  .nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 10px 0 10px;
+    width: var(--nav,90%);
+    margin: auto;
+    height: 80px;
+
+    .logo {
+      display: block;
+      cursor: pointer;
+    }
+
+    .second_part {
+      display: flex;
+      justify-content: space-around;
+      width: 60%;
+
+      span {
+        font-size: 20px ;
+        cursor: pointer;
+      }
+
+      .home {
+        color: resource.$blue-color;
+      }
+    }
+  }
+}
