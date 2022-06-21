@@ -1,36 +1,69 @@
-import React,{useState} from "react";
+import React,{useLayoutEffect,useEffect, useState} from "react";
 import { Icon } from '@iconify/react';
 import Carousel from 'react-elastic-carousel';
-import styled from 'styled-components'
-
+import styled from 'styled-components';
+import {useNavigate} from 'react-router-dom';
+import Page_animation from "./animations/Page_animation";
 function Home() {
+  let date = new Date();
+  let navigate = useNavigate();
   let inner_nav = ['All', 'Bags', 'Sneakers', 'Belt', 'Sunglass'];
   let [slide_style, setSlide_style] = useState({left:0});
   let [activated_nav,setActivated_nav] = useState(0);
+  let [width,setWidth] = useState(window.innerWidth);
+  let [time, setTime] = useState({hour:date.getHours(),minute: date.getMinutes(),second:date.getSeconds()});
   let [hover, setHover] = useState({love:true,trolley:true});
+  let [animation, setAnimation] = useState(false);
   let breakPoints = [
     {width:1, itemsToShow:1},
     {width:550, itemsToShow:2},
-    {width:768, itemsToShow:3},
+    {width:950, itemsToShow:3},
   ];
-
+  
+  useLayoutEffect(() => {
+    let setting; 
+   if(width < 570) {
+     setting = setInterval(() => {
+      let date = new Date();
+     setTime({hour:date.getHours(),minute: date.getMinutes(),second:date.getSeconds()});
+    },1000); 
+   }
+    function updateSize() {
+      setWidth(window.innerWidth);
+    }
+    window.addEventListener('resize', updateSize);
+    updateSize();
+    return () => {
+      window.removeEventListener('resize', updateSize)
+      clearInterval(setting);
+    };
+  }, []);
 
   function slide(num) {
-    setSlide_style({
-      left: num * 100 + 'px',
-    }); 
-    setActivated_nav(num);
+      setSlide_style({
+        left: num * 100 + 'px',
+      }); 
+      setActivated_nav(num);
+  
   };
-
+  function moveToAnotherPage(page){
+    setAnimation(prev => !prev);
+    setTimeout(() => {
+      navigate(page);
+      setAnimation(prev => !prev);
+    },1000)
+    
+  }
   return (<>
       <div className="big_wrapper">
         <div className="banner">
           <div className="text">
             <b>Super Flash Sale 50% OFF</b>
           </div>
-        </div>
-        <Carousel enableAutoPlay autoPlaySpeed={15000} breakPoints={breakPoints} className="carusel">
-          <Item className="carusel_card bag">
+        </div> 
+        <Carousel itemPadding={[0,0]}  initialActiveIndex={width < 570 ? 3 : 0} enableAutoPlay autoPlaySpeed={15000} breakPoints={breakPoints} className="carusel">
+          <Item maxWidth="100%" className="carusel_card bag" onClick={() => {moveToAnotherPage('/hot_deals')}}>
+            
             <p className="name">FS - QUILTED MAXI CROSS BAG</p>
             <img src="./assets/wallet (1).jpg" alt="wallet" className="img" />
             <span className="tog">
@@ -38,8 +71,10 @@ function Home() {
               <span className="promo">24%</span>
             </span>
             <span className="p cost">$234,43</span>   
+            
           </Item>
-          <Item className="carusel_card k1">
+          <Item maxWidth="100%" className="carusel_card k1" onClick={() => {moveToAnotherPage('/hot_deals')}}>
+           
             <p className="name">FS - QUILTED MAXI CROSS BAG</p>
             <img src="./assets/k1.jpg" alt="wallet" className="img" />
             <span className="tog">
@@ -47,8 +82,9 @@ function Home() {
               <span className="promo">24%</span>
             </span>
             <span className="p cost">$234,43</span>
+            
           </Item>
-          <Item className="carusel_card k2">
+          <Item maxWidth="100%" className="carusel_card k2" onClick={() => {moveToAnotherPage('/hot_deals')}}>
             <p className="name">FS - QUILTED MAXI CROSS BAG</p>
             <img src="./assets/k2.jpg" alt="wallet" className="img" />
             <span className="tog">
@@ -56,19 +92,63 @@ function Home() {
               <span className="promo">24%</span>
             </span>
             <span className="p cost">$234,43</span>
+
           </Item>
+          {width < 570 ? 
+          
+          <Item maxWidth="100%" className="carusel_card special">
+            <p className="b_name">Super Flash Sale 50% Off</p>
+            <img src="./assets/mobile.jpg" alt="wallet" className="img time_img" />
+            <span className="tog">
+              <span className="s hour">{time.hour}</span>
+              <span className="dot_wrap">
+              <span className="dot"></span>
+              <span className="dot"></span>
+              </span>
+              <span className="s minute">{time.minute}</span>
+              <span className="dot_wrap">
+              <span className="dot"></span>
+              <span className="dot"></span>
+              </span>
+              <span className="s second">{time.second}</span>
+            </span>
+          </Item>
+
+          : null}
+          
         </Carousel>
       </div>
-      <h2 align="center">The Best Items</h2>
-    
+      {animation ?  <Page_animation /> : null}
+      <h2 align="center" style={{marginTop:'10px'}}>The Best Items</h2>
+           
       <nav className="items_nav">
-        <ul className="items" ref={inner_nav}>
+        <ul className="items">
           {inner_nav.map( (item,index) => (
-            <li className={'item'} key={index} onClick={() => { slide(index) }}  ><a className="a" style={ activated_nav == index ? {color:'#40bfff'} : {color:'black'}}>{item}</a></li>
+            <li className={index == 4 ? 'item item0' : 'item' } key={index} onClick={() => { slide(index) }}  ><a className="a" style={ activated_nav == index ? {color:'#40bfff'} : {color:'black'}}>{item}</a></li>
           ))}
           
         </ul>
         <span className="slider" style={slide_style}></span>
+      </nav>
+      <nav className="mobile_items_nav">
+        <section className="up_nav">
+            <h2 className="text_name">Category</h2>
+            <h2 className="text_expand">More Category</h2>            
+        </section>
+        <section className="down_nav">
+          <div className="icon_wrap">
+        <Icon icon="ri:shirt-line" color="#40bfff" width="25" height="25" className="icon"/>
+          </div>
+          <div className="icon_wrap">
+        <Icon icon="pepicons:dress" color="#40bfff" width="25" height="25" className="icon"/>
+          </div>
+          <div className="icon_wrap">
+        <Icon icon="ic:outline-shopping-bag" color="#40bfff" width="25" height="25" className="icon"/>
+          </div>
+          <div className="icon_wrap">
+          <Icon icon="icon-park-outline:high-heeled-shoes" color="#40bfff" width="25" height="25" className="icon"/>
+          </div>
+        </section>
       </nav>
           <div className="sale_cards">
             <div className="card">
@@ -221,7 +301,7 @@ function Home() {
           <h2 className="Link">Load More</h2>
           <span className="link_under"></span>
           </div>
-          <div className="second_banner">
+          <div className="home_banner">
             <div className="text_side">
               <p className="main_text">Adidas Man runing sneakers</p>
               <p className="mini_text">performace and design. Taken right to the edge</p>
@@ -306,24 +386,10 @@ function Home() {
             </div>
           </div>
 
-          <div class="input-group mb-3 search">
-  <input type="text" class="form-control input" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="button-addon2" />
-  <button class="btn btn-outline-secondary submit" type="button" id="button-addon2">Button</button>
+          <div className="input-group mb-3 search">
+  <input type="text" className="form-control input" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="button-addon2" />
+  <button className="btn btn-outline-secondary submit" type="button" id="button-addon2">Button</button>
 </div>
-
-
-            <div className='footer'>
-              <div className='section_1'>
-
-              </div>
-              <div className="section_2">
-
-              </div>
-              <div className="footer">
-
-              </div>
-            </div>
-
 
     </>
   );

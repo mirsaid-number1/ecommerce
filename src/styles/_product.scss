@@ -1,0 +1,27 @@
+@use 'resource';
+.wrapper{
+
+    .product_wrapper{
+    display: flex;
+    justify-content: space-around;
+    .product_sector{
+        display: flex;
+        flex-direction: column;
+        
+        .product{
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+        }
+
+        .others{
+
+        }
+    }
+
+    .best_products{
+        
+    }
+    }
+
+}

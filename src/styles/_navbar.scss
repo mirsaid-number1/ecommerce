@@ -3,18 +3,39 @@
 :root{
   --up_nav:85%;
   --nav: 85%;
+  --up_nav_show:flex;
+  --nav_show:flex;
+  --mobile_nav_show:none;
+  --mobile_nav_logo_show:block;
+  
 }
 
 @media  (max-width:950px) {
   :root{
     --up_nav:100%;
     --nav:100%;
+    --up_nav_show:flex;
+    --nav_show:flex;
+  }
+}
+@media (max-width:800px) {
+  :root{
+    --up_nav_show:none;
+    --nav_show:none;
+    --mobile_nav_show:flex;
+  }
+}
+@media (max-width: 600px) {
+  :root{
+    --up_nav_show:none;
+    --nav_show:none;
+    --mobile_nav_logo_show:none;
+   
   }
 }
 
-
 .up_nav {
-  display: flex;
+  display: var(--up_nav_show,flex);
   align-items: center;
   justify-content: space-between;
   margin: 0 10px 0 10px;
@@ -46,22 +67,21 @@
 } // up-nav
 
 .navbar {
-  position: -webkit-sticky;
-  position: sticky;
-  top: 0;
-  width: 100%;
-  background-color: white;
-  z-index: 10;
-
-  .nav {
-    display: flex;
+  position:-webkit-sticky;
+  position:sticky !important;
+  top:0;
+  background-color: rgba(255, 255, 255, 0.9);
+  width:100%;
+  z-index:40 !important;
+  backdrop-filter: blur(5px);
+    .nav {
+    display: var(--nav_show,flex);
     justify-content: space-between;
     align-items: center;
     margin: 0 10px 0 10px;
     width: var(--nav,90%);
     margin: auto;
     height: 80px;
-
     .logo {
       display: block;
       cursor: pointer;
@@ -72,14 +92,47 @@
       justify-content: space-around;
       width: 60%;
 
-      span {
+      .span {
         font-size: 20px ;
         cursor: pointer;
-      }
+        text-decoration: none;
+        color:black;
 
-      .home {
-        color: resource.$blue-color;
+        .active{
+          color: resource.$blue-color;
+        }
       }
     }
   }
+  .mobile_nav{
+    margin: 10px;
+    padding:10px;
+      display: var(--mobile_nav_show);
+      align-items: center;
+      justify-content: space-evenly;
+      height:30px;
+      width:100%;
+
+      
+    .logo {
+      display: var(--mobile_nav_logo_show,block);
+      margin-right: 10px;
+      cursor: pointer;
+    }
+
+      .input_search{
+        width:600px;
+        align-items: center;
+        margin-top:15px;
+      }
+      .kid2{
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        float: left;
+        width: 160px;
+       
+      }
+    }
+  
 }

@@ -1,0 +1,126 @@
+@use "resource";
+
+:root{
+    --contact_part_direction:row;
+}
+
+    .route_nav{
+        width:100%;
+        height:35px;
+        font-siZe:23px;
+        display: flex;
+        justify-content: center;
+        align-items: center; 
+        background-color: resource.$white-color;
+        margin-bottom: 50px;
+        .Link{
+            text-decoration: none;
+            color: resource.$blue-color;
+        }
+    }
+
+    .contact_part{
+        margin-top: 20px;
+        display: flex;
+        flex-direction:var(--contact_part_direction,row);
+        width:1000px;
+        height: 700px;
+        margin:auto;
+        position: relative;
+        transition: all 200ms ease-in;
+        .img_part{
+            width:600px;
+            height:650px;
+            background-image: url('../images/opani_rasmi.jpg');
+            background-size: 100% 100%;
+            background-position: center;
+            background-repeat: no-repeat;
+            position: relative;
+            color:white;
+            
+            .main_word{
+                position: absolute;
+                top:50px;
+                right:5px;
+                font-size: 35px;
+                font-weight: 700;
+                width:200px;
+            }
+            .info_list{
+                position: absolute;
+                bottom:150px;
+                right:30px;
+                display: flex;
+                flex-direction: column;
+                height:250px;
+                justify-content: space-around;
+                .number{
+                    font-size: 15px;
+                    font-weight: 400;
+                }
+                .email{
+                    
+                    font-size: 15px;
+                    font-weight: 400;
+                }
+                .location{
+                    width:150px;
+                    font-size: 15px;
+                    font-weight: 400;
+                }
+            }
+            .minimizer{
+                position: absolute;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                top:300px;
+                right:-10px;
+                width:30px;
+                height:60px;
+                background-color: resource.$blue-color;
+                border-top-right-radius: 40%;
+                border-bottom-right-radius: 40%;
+                cursor:pointer;
+                transition: 200ms;
+                z-index: 10;
+            }
+        }
+
+        .form_part{
+            position: absolute;
+            top:0;
+            bottom:0;
+            display: flex;
+            justify-content: space-evenly;
+            align-items: center ;
+            flex-direction: center;
+            
+            width:400px;
+            height:650px;
+            border-bottom: 1px solid black;
+            border-left: 1px solid black;
+            border-right: 1px solid black;
+            transition: .2s;
+            background-color: white;
+            .form_contact{
+                width:100%;
+                height:100%;
+                padding: 20px;
+                display: flex;
+                flex-direction: column;
+                align-items: center !important;
+                justify-content: space-evenly;
+                  .submit{
+                      background-color: resource.$blue-color !important;
+                  }              
+            }
+        }
+        .right{
+            right:0;
+            transition: .2s;
+        }
+        .left{
+            left: -10px;
+        }
+    }
